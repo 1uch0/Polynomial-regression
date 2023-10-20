@@ -1,0 +1,46 @@
+import numpy as np
+import pandas as pd
+import random
+from sklearn.metrics import r2_score
+
+# Set a random seed for reproducibility
+np.random.seed(0)
+
+# Define the number of data points you want to generate
+num_data_points = 30
+
+# Add a meassure of randomness
+random_value = np.random.uniform (-2,2,num_data_points)
+
+# Generate synthetic data for the dataset
+machine_activity = np.random.uniform(0, 10, num_data_points)
+energy_consumption = (machine_activity)*2 + random_value
+
+
+# Create a DataFrame to store the data
+
+data = pd.DataFrame({
+    'Machine Activity (hours)': machine_activity,
+    'Energy Consumption (kWh)': energy_consumption
+})
+
+#Plot the data
+plt.scatter(machine_activity, energy_consumption)
+plt.show()
+
+#Apply polynomial regression 
+
+mymodel = numpy.poly1d(numpy.polyfit(machine_activity, energy_consumption, 2))
+myline = numpy.linspace(0, 10, 30)
+plt.scatter(machine_activity, energy_consumption)
+plt.plot(myline, mymodel(myline))
+plt.show()
+
+#Evaluating the  goodness-of-fit of the regression model
+mymodel = numpy.poly1d(numpy.polyfit(machine_activity, energy_consumption, 2))
+print(r2_score(y, mymodel(x)))
+
+#Predicting energy consumption
+mymodel = numpy.poly1d(numpy.polyfit(machine_activity, energy_consumption, 2))
+energy_con = mymodel(8)
+print(energy_con)
